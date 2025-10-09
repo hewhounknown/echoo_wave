@@ -1,0 +1,123 @@
+<div class="d-flex flex-column h-100">
+    <!-- Chat Header -->
+    <header class="bg-white border-bottom p-3 d-flex justify-content-between align-items-center flex-shrink-0">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-link d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h5 class="mb-0 fw-bold">Sarah Johnson</h5>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-link text-dark">
+                <i class="fas fa-phone"></i>
+            </button>
+            <button class="btn btn-link text-dark">
+                <i class="fas fa-video"></i>
+            </button>
+            <button class="btn btn-link text-dark">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Messages Container -->
+    <div class="flex-grow-1 overflow-auto p-4 bg-white" id="messages" style="height: 0; min-height: 0; display: flex; flex-direction: column-reverse;">
+        <!-- Received Message -->
+        <div class="d-flex gap-3 mb-4">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
+            <div>
+                <div class="bg-light p-3 rounded-3">
+                    <p class="mb-0">Hey! How are you doing?</p>
+                </div>
+                <small class="text-muted d-block mt-1">10:30 AM</small>
+            </div>
+        </div>
+
+        <!-- Sent Message -->
+        <div class="d-flex gap-3 mb-4 justify-content-end">
+            <div>
+                <div class="bg-primary text-white p-3 rounded-3">
+                    <p class="mb-0">I'm doing great, thanks for asking!</p>
+                </div>
+                <small class="text-muted d-block mt-1 text-end">10:31 AM</small>
+            </div>
+            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
+        </div>
+
+        <!-- Received Message -->
+        <div class="d-flex gap-3 mb-4">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
+            <div>
+                <div class="bg-light p-3 rounded-3">
+                    <p class="mb-0">That's awesome! Do you want to grab coffee later?</p>
+                </div>
+                <small class="text-muted d-block mt-1">10:32 AM</small>
+            </div>
+        </div>
+
+        <!-- Sent Message -->
+        <div class="d-flex gap-3 mb-4 justify-content-end">
+            <div>
+                <div class="bg-primary text-white p-3 rounded-3">
+                    <p class="mb-0">Sounds great! When works for you?</p>
+                </div>
+                <small class="text-muted d-block mt-1 text-end">10:33 AM</small>
+            </div>
+            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
+        </div>
+
+        <!-- Received Message -->
+        <div class="d-flex gap-3 mb-4">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
+            <div>
+                <div class="bg-light p-3 rounded-3">
+                    <p class="mb-0">How about 2 PM at the usual spot?</p>
+                </div>
+                <small class="text-muted d-block mt-1">10:35 AM</small>
+            </div>
+        </div>
+
+        <!-- Sent Message -->
+        <div class="d-flex gap-3 justify-content-end">
+            <div>
+                <div class="bg-primary text-white p-3 rounded-3">
+                    <p class="mb-0">Perfect! See you then! 😊</p>
+                </div>
+                <small class="text-muted d-block mt-1 text-end">10:36 AM</small>
+            </div>
+            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
+        </div>
+    </div>
+
+    <!-- Chat Footer -->
+    <footer class="bg-white border-top p-3 flex-shrink-0">
+        <form hx-post="#" hx-target="#messages" hx-swap="beforeend" hx-on::after-request="this.reset(); document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control rounded-pill border" placeholder="Type a message..." required>
+                <button class="btn btn-primary rounded-circle" type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+    </footer>
+</div>
+
+<script>
+// Auto-scroll to bottom when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const messagesContainer = document.getElementById('messages');
+    if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+});
+
+// Also scroll to bottom after HTMX requests
+document.addEventListener('htmx:afterRequest', function(event) {
+    const messagesContainer = document.getElementById('messages');
+    if (messagesContainer && event.detail.target.id === 'messages') {
+        setTimeout(() => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 10);
+    }
+});
+</script>
