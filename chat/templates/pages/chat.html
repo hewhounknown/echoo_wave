@@ -5,7 +5,7 @@
             <button class="btn btn-link d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
                 <i class="fas fa-bars"></i>
             </button>
-            <h5 class="mb-0 fw-bold">Sarah Johnson</h5>
+            <h5 class="mb-0 fw-bold">{{ user.username|title }}</h5>
         </div>
         <div class="d-flex gap-2">
             <button class="btn btn-link text-dark">
@@ -23,70 +23,36 @@
     <!-- Messages Container -->
     <div class="flex-grow-1 overflow-auto p-4 bg-white" id="messages" style="height: 0; min-height: 0; display: flex; flex-direction: column-reverse;">
         <!-- Received Message -->
-        <div class="d-flex gap-3 mb-4">
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
-            <div>
-                <div class="bg-light p-3 rounded-3">
-                    <p class="mb-0">Hey! How are you doing?</p>
+        
+        {% for chat in chats  reversed%}
+            {% if chat.sender.username == 'admin' %}
+                <!-- Sent Message -->
+                <div class="d-flex gap-3 mb-4 justify-content-end">
+                    <div>
+                        <div class="bg-primary text-white p-3 rounded-3">
+                            <p class="mb-0">{{ chat.message }}</p>
+                        </div>
+                        <small class="text-muted d-block mt-1 text-end">{{ chat.created_at|date:"h:i A" }}</small>
+                    </div>
+                    <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                         style="width: 36px; height: 36px; flex-shrink: 0;">A</div>
                 </div>
-                <small class="text-muted d-block mt-1">10:30 AM</small>
-            </div>
-        </div>
-
-        <!-- Sent Message -->
-        <div class="d-flex gap-3 mb-4 justify-content-end">
-            <div>
-                <div class="bg-primary text-white p-3 rounded-3">
-                    <p class="mb-0">I'm doing great, thanks for asking!</p>
+            {% else %}
+                <!-- Received Message -->
+                <div class="d-flex gap-3 mb-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                         style="width: 36px; height: 36px; flex-shrink: 0;">{{ user.username|slice:":2"|upper }}</div>
+                    <div>
+                        <div class="bg-light p-3 rounded-3">
+                            <p class="mb-0">{{ chat.message }}</p>
+                        </div>
+                        <small class="text-muted d-block mt-1">{{ chat.created_at|date:"h:i A" }}</small>
+                    </div>
                 </div>
-                <small class="text-muted d-block mt-1 text-end">10:31 AM</small>
-            </div>
-            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
-        </div>
-
-        <!-- Received Message -->
-        <div class="d-flex gap-3 mb-4">
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
-            <div>
-                <div class="bg-light p-3 rounded-3">
-                    <p class="mb-0">That's awesome! Do you want to grab coffee later?</p>
-                </div>
-                <small class="text-muted d-block mt-1">10:32 AM</small>
-            </div>
-        </div>
-
-        <!-- Sent Message -->
-        <div class="d-flex gap-3 mb-4 justify-content-end">
-            <div>
-                <div class="bg-primary text-white p-3 rounded-3">
-                    <p class="mb-0">Sounds great! When works for you?</p>
-                </div>
-                <small class="text-muted d-block mt-1 text-end">10:33 AM</small>
-            </div>
-            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
-        </div>
-
-        <!-- Received Message -->
-        <div class="d-flex gap-3 mb-4">
-            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">SJ</div>
-            <div>
-                <div class="bg-light p-3 rounded-3">
-                    <p class="mb-0">How about 2 PM at the usual spot?</p>
-                </div>
-                <small class="text-muted d-block mt-1">10:35 AM</small>
-            </div>
-        </div>
-
-        <!-- Sent Message -->
-        <div class="d-flex gap-3 justify-content-end">
-            <div>
-                <div class="bg-primary text-white p-3 rounded-3">
-                    <p class="mb-0">Perfect! See you then! 😊</p>
-                </div>
-                <small class="text-muted d-block mt-1 text-end">10:36 AM</small>
-            </div>
-            <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 36px; height: 36px; flex-shrink: 0;">YO</div>
-        </div>
+            {% endif %}
+        {% empty %}
+            <div class="text-center text-muted mt-5">No messages yet</div>
+        {% endfor %}
     </div>
 
     <!-- Chat Footer -->
