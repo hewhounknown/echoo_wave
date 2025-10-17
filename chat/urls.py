@@ -6,6 +6,6 @@ urlpatterns = [
     path('chat/', chat_view, name='chat'),
     path('default/', default_view, name='default'),
     path('components/sidebar/', sidebar_view, name='sidebar'),
-    path('pages/chat/', chat_view, name='chat_page'),
+    path('pages/chat/<int:user_id>/', chat_view, name='chat_page'),
     path('pages/default/', default_view, name='default_page'),
 ]
